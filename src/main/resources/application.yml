@@ -1,0 +1,28 @@
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/example?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
+        username: Username
+        password: Password
+    devtools:
+        livereload:
+            enabled: true
+    freemarker:
+        cache: false
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        open-in-view: false
+        show-sql: true
+        hibernate:
+            format_sql: true
+            ddl-auto: create
+
+logging:
+    level:
+        org:
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
