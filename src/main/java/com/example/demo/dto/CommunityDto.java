@@ -3,6 +3,8 @@ package com.example.demo.dto;
 import com.example.demo.model.Community;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -16,6 +18,7 @@ public class CommunityDto {
     private int univid;
     private int views;
     private int comments;
+    private LocalDateTime modifiedDate;
 
     public Community toEntity(){
         Community build = Community.builder()
@@ -31,7 +34,7 @@ public class CommunityDto {
     }
 
     @Builder
-    public CommunityDto(long id, String title, String writer, String body, int univid, int views,int comments){
+    public CommunityDto(long id, String title, String writer, String body, int univid, int views,int comments,LocalDateTime modifiedDate){
         this.id = id;
         this.title = title;
         this. writer = writer;
@@ -39,6 +42,7 @@ public class CommunityDto {
         this.univid= univid;
         this.views=views;
         this.comments=comments;
+        this.modifiedDate = modifiedDate;
     }
 
 }
