@@ -2,8 +2,8 @@ spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://localhost:3306/example?serverTimezone=Asia/Seoul&characterEncoding=utf8
-        username: UserId
-        password: Password
+        username: ID
+        password: PW
     devtools:
         livereload:
             enabled: true

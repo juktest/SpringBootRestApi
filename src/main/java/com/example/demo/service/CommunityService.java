@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BoardlistDto;
 import com.example.demo.dto.CommunityDto;
 import com.example.demo.model.Community;
 import com.example.demo.repository.CommunityRepository;
@@ -24,15 +25,14 @@ public class CommunityService {
 
 
     @Transactional
-    public List<CommunityDto> getCommunitylist(){
+    public List<BoardlistDto> getCommunitylist(){
         List<Community> boardEntities = communityRepository.findAll();
-        List<CommunityDto> boardDtoList = new ArrayList<>();
+        List<BoardlistDto> boardDtoList = new ArrayList<>();
 
         for ( Community boardEntity : boardEntities) {
-            CommunityDto boardDTO = CommunityDto.builder()
+            BoardlistDto boardDTO = BoardlistDto.builder()
                     .id(boardEntity.getId())
                     .title(boardEntity.getTitle())
-                    .body(boardEntity.getBody())
                     .writer(boardEntity.getWriter())
                     .modifiedDate(boardEntity.getModifiedDate())
                     .comments(boardEntity.getComments())

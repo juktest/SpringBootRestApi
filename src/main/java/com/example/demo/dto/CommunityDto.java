@@ -32,7 +32,24 @@ public class CommunityDto {
                 .build();
         return build;
     }
+    public class BoardDetailDto{
+        private long id;
+        private String title;
+        private String writer;
+        private int views;
+        private int comments;
 
+        public Community toEntity(){
+            Community build = Community.builder()
+                    .id(id)
+                    .title(title)
+                    .writer(writer)
+                    .views(views)
+                    .comments(comments)
+                    .build();
+            return build;
+        }
+    }
     @Builder
     public CommunityDto(long id, String title, String writer, String body, int univid, int views,int comments,LocalDateTime modifiedDate){
         this.id = id;
@@ -44,5 +61,7 @@ public class CommunityDto {
         this.comments=comments;
         this.modifiedDate = modifiedDate;
     }
+
+
 
 }
