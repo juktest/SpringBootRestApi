@@ -23,14 +23,14 @@ public class Comments extends Time{
      * 댓글을 달 writer의 이름
      */
     @Column (length=30,nullable=false)
-        private String writer_c;
+        private String writer;
 
 
     /**
      *  100자 이내의 댓글 입력
      */
     @Column(length=100, nullable=false)
-        private String body_c;
+        private String body;
 
     /**
      *  대학 번호
@@ -49,8 +49,8 @@ public class Comments extends Time{
     @Builder
     public Comments(long id,String writer,String body, int univid, int postid) {
         this.id=id;
-        this.writer_c=writer;
-        this.body_c=body;
+        this.writer=writer;
+        this.body=body;
         this.univid = univid;
         this.postid=postid;
 

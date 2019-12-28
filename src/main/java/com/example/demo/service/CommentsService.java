@@ -29,7 +29,7 @@ public class CommentsService {
 
 
     /**
-     *  list 에 표시되야할 댓글 정보 : writter (작성자), body(내용)
+     *  list 에 표시되야할 댓글 정보 : writter (작성자), body(내용) , date(작성 날짜)
      *
      *  19.12.27 : univid별, postid별 나누어서 데이터 호출
      */
@@ -42,8 +42,9 @@ public class CommentsService {
             CommentsDto boardDTO = CommentsDto.builder()
                     .id(boardEntity.getId())
                     .postid(boardEntity.getPostid())
-                    .writer(boardEntity.getWriter_c())
-                    .body(boardEntity.getBody_c())
+                    .writer(boardEntity.getWriter())
+                    .modifiedDate(boardEntity.getModifiedDate())
+                    .body(boardEntity.getBody())
                     .univid(boardEntity.getUnivid())
                     .build();
 

@@ -34,6 +34,7 @@ public class CommentsController {
      *  list 에 표시되야할 댓글 정보 : writter (작성자), body(내용)
      *
      *  19.12.27 : univid별, postid별 나누어서 데이터 호출
+     *  19.12.28 : date 호출 추가, delete에서 univid, postid 받아오기 기능 삭제
      *
      */
     @CrossOrigin(origins = "*")
@@ -61,9 +62,9 @@ public class CommentsController {
      *  (univid, postid 상관없이)
      */
     @CrossOrigin(origins = "*")
-    @PutMapping("Community/{Univid}/{Postid}/Comments/{id}")
-    public long update(@PathVariable("Univid")int Univid, @PathVariable("Postid")int Postid,@PathVariable("id")long id, @RequestBody String json) throws JsonProcessingException {
-        return  CommentsService.rewriteComment(Univid, Postid,id,json);
+    @PutMapping("Community/{univid}/{postid}/Comments/{id}")
+    public long update(@PathVariable("univid")int univid,@PathVariable("postid")int postid,@PathVariable("id")long id, @RequestBody String json) throws JsonProcessingException {
+        return  CommentsService.rewriteComment(univid,postid,id,json);
     }
 
 
@@ -73,8 +74,8 @@ public class CommentsController {
      *  (univid, postid 상관없이)
      */
     @CrossOrigin(origins = "*")
-    @DeleteMapping("Community/{Univid}/{Postid}/Comments/{id}")
-    public String delete(@PathVariable("Univid")int Univid, @PathVariable("Postid")Long Postid,@PathVariable("id")long id){
+    @DeleteMapping("Community/Comments/{id}")
+    public String delete(@PathVariable("id")long id){
         CommentsService.deleteComment(id);
         return "success";
     }

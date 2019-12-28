@@ -19,6 +19,7 @@ public class CommentsDto {
     private String body;
     private int univid;
     private int postid;
+    private LocalDateTime modifiedDate;
 
     /**
      * class -> Entity
@@ -40,11 +41,12 @@ public class CommentsDto {
      */
 
     @Builder
-    public CommentsDto(long id,String writer, String body,int univid,int postid) {
+    public CommentsDto(long id,String writer, String body,int univid,int postid,LocalDateTime modifiedDate) {
         this.id=id;
         this.writer=writer;
         this.body=body;
         this.univid=univid;
         this.postid=postid;
+        this.modifiedDate = modifiedDate;
     }
 }
