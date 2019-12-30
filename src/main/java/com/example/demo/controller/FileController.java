@@ -80,8 +80,8 @@ public class FileController {
     }
 
     @PostMapping("/Community/{Univid}/{Postid}/image/{no}")
-    public FileUploadResponse upcommunityimg(@RequestParam("file") MultipartFile file, @PathVariable("Univid") int Univid, @PathVariable("Postid") int Postid,@PathVariable("no") int no) {
-        String filename = "Community"+ Univid + "-" + Postid + "+" + no;
+    public String upcommunityimg(@RequestParam("file") MultipartFile file, @PathVariable("Univid") int Univid, @PathVariable("Postid") int Postid,@PathVariable("no") int no) {
+        String filename = "Community"+ Univid + "-" + Postid + "-" + no;
         String fileName = service.storeFile(file,filename);
         StringTokenizer tockens = new StringTokenizer(fileName);
         tockens.nextToken(".");
@@ -89,8 +89,8 @@ public class FileController {
                 .path("/Community/"+Univid)
                 .path("/"+Postid+"/image/"+no + "."+tockens.nextToken("."))
                 .toUriString();
-
-        return new FileUploadResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+        new FileUploadResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+        return fileDownloadUri;
     }
 
 
