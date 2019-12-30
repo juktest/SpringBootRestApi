@@ -42,7 +42,7 @@ public class CommentsService {
             CommentsDto boardDTO = CommentsDto.builder()
                     .id(boardEntity.getId())
                     .postid(boardEntity.getPostid())
-                    .writer(boardEntity.getWriterName())
+                    .writer(boardEntity.getWriter())
                     .modifiedDate(boardEntity.getModifiedDate())
                     .body(boardEntity.getBody())
                     .univid(boardEntity.getUnivid())
