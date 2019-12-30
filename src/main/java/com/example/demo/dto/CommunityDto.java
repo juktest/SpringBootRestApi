@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CommunityDto {
     private long id;
+    private long previd;
+    private long nextid;
     private String title;
     private String writer;
     private String body;
@@ -51,8 +53,10 @@ public class CommunityDto {
         }
     }
     @Builder
-    public CommunityDto(long id, String title, String writer, String body, int univid, int views,int comments,LocalDateTime modifiedDate){
+    public CommunityDto(long id, long previd, long nextid,String title, String writer, String body, int univid, int views,int comments,LocalDateTime modifiedDate){
         this.id = id;
+        this.previd = previd;
+        this.nextid = nextid;
         this.title = title;
         this. writer = writer;
         this.body = body;

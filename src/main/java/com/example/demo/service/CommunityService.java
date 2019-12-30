@@ -24,6 +24,7 @@ public class CommunityService {
 
 
 
+
     @Transactional
     public List<BoardlistDto> getCommunitylist(){
         List<Community> boardEntities = communityRepository.findAll();
@@ -57,11 +58,32 @@ public class CommunityService {
 
     @Transactional
     public CommunityDto getPost(int Univid, Long Postid) {
+        List<BoardlistDto> list = getCommunitylist();
+        long priv=0,next=0,tmp=0;
+        for(int i=0;i<list.size()-1;i++){
+            if(list.get(0).getId()==Postid){
+                if(list.size()==1)
+                    next=0;
+                else
+                    next=list.get(1).getId();
+                break;
+            }
+            priv=list.get(i).getId();
+            if(list.get(i+1).getId()==Postid){
+                if(i+2==list.size())
+                    next=0;
+                else
+                    next=list.get(i+2).getId();
+                break;
+            }
+        }
         Optional<Community> communityWrapper = communityRepository.findById(Postid);
         Community community = communityWrapper.get();
 
        CommunityDto communityDTO = CommunityDto.builder()
                .id(community.getId())
+               .previd(priv)
+               .nextid(next)
                .title(community.getTitle())
                .body(community.getBody())
                .writer(community.getWriter())
