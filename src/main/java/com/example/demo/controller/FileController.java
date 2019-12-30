@@ -78,4 +78,46 @@ public class FileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
+
+    @PostMapping("/Community/{Univid}/{Postid}/image/{no}")
+    public FileUploadResponse upcommunityimg(@RequestParam("file") MultipartFile file, @PathVariable("Univid") int Univid, @PathVariable("Postid") int Postid,@PathVariable("no") int no) {
+        String filename = "Community"+ Univid + "-" + Postid + "+" + no;
+        String fileName = service.storeFile(file,filename);
+        StringTokenizer tockens = new StringTokenizer(fileName);
+        tockens.nextToken(".");
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/Community/"+Univid)
+                .path("/"+Postid+"/image/"+no + "."+tockens.nextToken("."))
+                .toUriString();
+
+        return new FileUploadResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+    }
+
+
+
+    @GetMapping("/Community/{Univid}/{Postid}/image/{no}")
+    public ResponseEntity<Resource> downcommunityimg( @PathVariable("Univid") int Univid, @PathVariable("Postid") int Postid, @PathVariable("no")String  no, HttpServletRequest request){
+        // Load file as Resource
+        String fileName = "Community"+ Univid + "-" + Postid + "+" + no;
+        Resource resource = service.loadFileAsResource(fileName);
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
 }
