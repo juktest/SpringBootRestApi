@@ -23,7 +23,7 @@ public class Comments extends Time{
      * 댓글을 달 writer의 이름
      */
     @Column (length=30,nullable=false)
-        private String writer;
+        private String writerName;
 
 
     /**
@@ -49,7 +49,7 @@ public class Comments extends Time{
     @Builder
     public Comments(long id,String writer,String body, int univid, int postid) {
         this.id=id;
-        this.writer=writer;
+        this.writerName=writer;
         this.body=body;
         this.univid = univid;
         this.postid=postid;

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CommentsDto {
     private long id;
-    private String writer;
+    private String writerName;
     private String body;
     private int univid;
     private int postid;
@@ -28,7 +28,7 @@ public class CommentsDto {
     public Comments toEntity() {
         Comments build = Comments.builder()
                 .id(id)
-                .writer(writer)
+                .writer(writerName)
                 .body(body)
                 .univid(univid)
                 .postid(postid)
@@ -43,7 +43,7 @@ public class CommentsDto {
     @Builder
     public CommentsDto(long id,String writer, String body,int univid,int postid,LocalDateTime modifiedDate) {
         this.id=id;
-        this.writer=writer;
+        this.writerName=writer;
         this.body=body;
         this.univid=univid;
         this.postid=postid;
