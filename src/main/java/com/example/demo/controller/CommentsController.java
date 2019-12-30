@@ -74,9 +74,9 @@ public class CommentsController {
      *  (univid, postid 상관없이)
      */
     @CrossOrigin(origins = "*")
-    @DeleteMapping("Community/Comments/{id}")
-    public String delete(@PathVariable("id")long id){
-        CommentsService.deleteComment(id);
+    @DeleteMapping("Community/{univid}/{postid}/Comments/{id}")
+    public String delete(@PathVariable("id")long id,@PathVariable("postid") long Postid){
+        CommentsService.deleteComment(id,Postid);
         return "success";
     }
 

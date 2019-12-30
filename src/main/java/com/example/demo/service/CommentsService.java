@@ -2,8 +2,11 @@ package com.example.demo.service;
 
 
 import com.example.demo.dto.CommentsDto;
+import com.example.demo.dto.CommunityDto;
 import com.example.demo.model.Comments;
+import com.example.demo.model.Community;
 import com.example.demo.repository.CommentsRepository;
+import com.example.demo.repository.CommunityRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -19,6 +22,7 @@ import org.hibernate.criterion.Example;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @AllArgsConstructor
@@ -26,7 +30,7 @@ import java.util.List;
 
 public class CommentsService {
     private CommentsRepository commentsRepository;
-
+    private CommunityRepository communityRepository; // 댓글수 추가용
 
     /**
      *  list 에 표시되야할 댓글 정보 : writter (작성자), body(내용) , date(작성 날짜)
@@ -65,6 +69,23 @@ public class CommentsService {
         commentsDto = objectMapper.readValue(json, CommentsDto.class);
         commentsDto.setUnivid(Univid);
         commentsDto.setPostid(Postid);
+
+        Optional<Community> communityWrapper = communityRepository.findById((long)Postid);
+        Community community = communityWrapper.get();
+
+        CommunityDto communityDTO = CommunityDto.builder()
+                .id(community.getId())
+                .title(community.getTitle())
+                .body(community.getBody())
+                .writer(community.getWriter())
+                .modifiedDate(community.getCreatedDate())
+                .comments(community.getComments()+1)
+                .univid(community.getUnivid())
+                .views(community.getViews())
+                .build();
+        communityRepository.save(communityDTO.toEntity()).getId();
+
+
     return commentsRepository.save(commentsDto.toEntity()).getId(); // 잘모르겠음
     }
 
@@ -89,8 +110,24 @@ public class CommentsService {
      *   댓글의 고유번호 (id) 에 접근하여 삭제
      */
     @Transactional
-    public void deleteComment(long id) {
-        commentsRepository.deleteById(id);
+    public void deleteComment(long id, long Postid) {
+
+        Optional<Community> communityWrapper = communityRepository.findById((long)Postid);
+        Community community = communityWrapper.get();
+
+        CommunityDto communityDTO = CommunityDto.builder()
+                .id(community.getId())
+                .title(community.getTitle())
+                .body(community.getBody())
+                .writer(community.getWriter())
+                .modifiedDate(community.getCreatedDate())
+                .comments(community.getComments()-1)
+                .univid(community.getUnivid())
+                .views(community.getViews())
+                .build();
+        communityRepository.save(communityDTO.toEntity()).getId();
+        commentsRepository.deleteById(id)
+        ;
     }
 }
 

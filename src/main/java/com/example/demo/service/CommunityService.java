@@ -34,7 +34,7 @@ public class CommunityService {
                     .id(boardEntity.getId())
                     .title(boardEntity.getTitle())
                     .writer(boardEntity.getWriter())
-                    .modifiedDate(boardEntity.getModifiedDate())
+                    .modifiedDate(boardEntity.getCreatedDate())
                     .comments(boardEntity.getComments())
                     .univid(boardEntity.getUnivid())
                     .views(boardEntity.getViews())
@@ -65,12 +65,12 @@ public class CommunityService {
                .title(community.getTitle())
                .body(community.getBody())
                .writer(community.getWriter())
-               .modifiedDate(community.getModifiedDate())
+               .modifiedDate(community.getCreatedDate())
                .comments(community.getComments())
                .univid(community.getUnivid())
-               .views(community.getViews())
+               .views(community.getViews()+1)
                 .build();
-
+        communityRepository.save(communityDTO.toEntity()).getId();
 
         return communityDTO;
     }
